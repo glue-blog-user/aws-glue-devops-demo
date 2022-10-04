@@ -1,0 +1,39 @@
+{
+  "name" : "aws-glue-devops-demo-job",
+  "description" : "",
+  "role" : "arn:aws:iam::378688357350:role/AWSGlueStudioRole",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-378688357350-us-east-1/scripts/aws-glue-devops-demo-job.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-378688357350-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-enable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-378688357350-us-east-1/temporary/"
+  },
+  "maxRetries" : 3,
+  "allocatedCapacity" : 10,
+  "timeout" : 2880,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "3.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1664898119982\":{\"CatalogSource\":{\"Database\":\"torontoparking\",\"Name\":\"AWS Glue Data Catalog\",\"Table\":\"tickets\"}},\"node-1664898148784\":{\"Filter\":{\"Filters\":[{\"Negated\":false,\"Operation\":\"REGEX\",\"Values\":[{\"Type\":\"CONSTANT\",\"Value\":[\"PARK ON PRIVATE PROPERTY\"]},{\"Type\":\"COLUMNEXTRACTED\",\"Value\":[\"infraction_description\"]}]}],\"Inputs\":[\"node-1664898119982\"],\"LogicalOperator\":\"AND\",\"Name\":\"Filter\"}},\"node-1664898399200\":{\"S3DirectTarget\":{\"Compression\":\"none\",\"Format\":\"json\",\"Inputs\":[\"node-1664898148784\"],\"Name\":\"Amazon S3\",\"PartitionKeys\":[],\"Path\":\"s3://airflow-modweek2022-bucket\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "aws-glue-devops-demo",
+    "branch" : "develop",
+    "folder" : "aws-glue-devops-demo-job"
+  }
+}
